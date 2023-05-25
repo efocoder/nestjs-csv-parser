@@ -1,8 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { parse } from 'csv-parse';
+
 import { CommodityPrice } from './schemas/commodity-price.schema';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
+import { fetchCommodityDto } from './dto/create-commodity-price.dto';
+import { formatDate, validateDates } from '../utils/shared';
 
 @Injectable()
 export class CommodityPricesService {
@@ -40,6 +43,46 @@ export class CommodityPricesService {
         },
       );
       return 'Request is been processed...';
+    } catch (e) {
+      this.logger.error(e);
+    }
+  }
+
+  async findCommodities(filter: fetchCommodityDto) {
+    const { commodity, market, start_date, end_date } = filter;
+    validateDates(formatDate(start_date), formatDate(end_date));
+    try {
+      return await this.commodityModel.aggregate([
+        {
+          $match: {
+            commodity: {
+              $regex: `^${commodity}$`,
+              $options: 'i',
+            },
+            market: { $regex: `^${market}$`, $options: 'i' },
+            date: {
+              $gte: formatDate(start_date),
+              $lte: formatDate(end_date),
+            },
+          },
+        },
+        {
+          $group: {
+            _id: commodity,
+            average_price: { $avg: '$price' },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            commodity: commodity,
+            market: market,
+            average_price: '$average_price',
+            start_start: start_date,
+            end_date: end_date,
+          },
+        },
+      ]);
     } catch (e) {
       this.logger.error(e);
     }

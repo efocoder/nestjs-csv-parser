@@ -1,3 +1,5 @@
+import { BadRequestException } from '@nestjs/common';
+
 export function formatError(errors: any) {
   const myErrors = {};
 
@@ -35,4 +37,17 @@ export function createResponse(
   }
 
   return resp;
+}
+
+export function formatDate(dateString) {
+  const splitDate = dateString.split('/');
+
+  return new Date(+splitDate[2], splitDate[1] - 1, +splitDate[0]);
+}
+
+export function validateDates(startDate, endDate) {
+  if (startDate > endDate)
+    throw new BadRequestException({
+      start_date: 'start_date cannot be greater than end_date',
+    });
 }
