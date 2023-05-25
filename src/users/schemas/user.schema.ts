@@ -1,8 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
 import { IsEmail } from 'class-validator';
 import * as bcrypt from 'bcrypt';
-import { Expose } from 'class-transformer';
+import { HydratedDocument } from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -10,11 +9,9 @@ export type UserDocument = HydratedDocument<User>;
 export class User {
   @Prop({ unique: true, required: true })
   @IsEmail()
-  @Expose()
   email: string;
 
   @Prop({ required: true })
-  @Expose()
   name: string;
 
   @Prop({ required: true, minlength: 6 })

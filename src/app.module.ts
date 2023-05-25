@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Config } from './config/config';
 import { UsersModule } from './users/users.module';
+import { CommodityPricesModule } from './commodity-prices/commodity-prices.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { UsersModule } from './users/users.module';
       `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.1z4rrvt.mongodb.net/?retryWrites=true&w=majority`,
     ),
     UsersModule,
+    CommodityPricesModule,
   ],
   controllers: [],
   providers: [],
