@@ -8,7 +8,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  async singUp(
+  async signUp(
     @Body() signUpUserDto: SignUpUserDto,
   ): Promise<CreateResponseType> {
     return createResponse(

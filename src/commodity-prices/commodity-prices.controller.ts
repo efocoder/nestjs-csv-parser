@@ -7,13 +7,16 @@ import {
   Post,
   Query,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { CommodityPricesService } from './commodity-prices.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { createResponse } from '../utils/shared';
+import { createResponse, CreateResponseType } from '../utils/shared';
 import { fetchCommodityDto } from './dto/create-commodity-price.dto';
+import { UserGuard } from '../users/user.guard';
 
+@UseGuards(UserGuard)
 @Controller({ path: 'commodities', version: '1' })
 export class CommodityPricesController {
   constructor(
@@ -38,7 +41,7 @@ export class CommodityPricesController {
         }),
     )
     file: Express.Multer.File,
-  ) {
+  ): Promise<CreateResponseType> {
     return createResponse(
       HttpStatus.OK,
       await this.commodityPricesService.parseAndStoreData(file),
@@ -47,7 +50,9 @@ export class CommodityPricesController {
 
   @HttpCode(HttpStatus.OK)
   @Get()
-  async findCommodities(@Query() filter: fetchCommodityDto) {
+  async findCommodities(
+    @Query() filter: fetchCommodityDto,
+  ): Promise<CreateResponseType> {
     return createResponse(
       HttpStatus.OK,
       'Request successful',

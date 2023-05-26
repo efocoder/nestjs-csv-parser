@@ -15,5 +15,6 @@ import {
   ],
   controllers: [CommodityPricesController],
   providers: [CommodityPricesService],
+  exports: [CommodityPricesService],
 })
 export class CommodityPricesModule {}

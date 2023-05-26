@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IsEmail } from 'class-validator';
 import * as bcrypt from 'bcrypt';
-import { HydratedDocument } from 'mongoose';
+import { Document } from 'mongoose';
 
-export type UserDocument = HydratedDocument<User>;
+export type UserDocument = Document<User>;
 
 @Schema()
 export class User {

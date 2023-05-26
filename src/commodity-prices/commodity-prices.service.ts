@@ -10,7 +10,6 @@ import { formatDate, validateDates } from '../utils/shared';
 @Injectable()
 export class CommodityPricesService {
   private readonly logger = new Logger(CommodityPricesService.name);
-  private commodities = [];
 
   constructor(
     @InjectModel(CommodityPrice.name)
@@ -42,7 +41,7 @@ export class CommodityPricesService {
           await this.storeInDb(results);
         },
       );
-      return 'Request is been processed...';
+      return 'Request is been processed...'; // User can later be notified via email
     } catch (e) {
       this.logger.error(e);
     }
