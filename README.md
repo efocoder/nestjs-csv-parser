@@ -37,6 +37,12 @@ $ docker-compose stop
 $ yarn run test
 ```
 
+### Note: In case of "couldn't find package on npm registry" error when starting the container, run the following command in your termianl
+
+```bash
+$ npm config set registry https://registry.npmjs.org/
+```
+
 ## License
 
 Nest is [MIT licensed](LICENSE).
