@@ -7,9 +7,7 @@ import { CommodityPricesModule } from './commodity-prices/commodity-prices.modul
 @Module({
   imports: [
     Config,
-    MongooseModule.forRoot(
-      `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.1z4rrvt.mongodb.net/?retryWrites=true&w=majority`,
-    ),
+    MongooseModule.forRoot(process.env.MONGODB_URL),
     UsersModule,
     CommodityPricesModule,
   ],
@@ -17,3 +15,5 @@ import { CommodityPricesModule } from './commodity-prices/commodity-prices.modul
   providers: [],
 })
 export class AppModule {}
+
+// `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.1z4rrvt.mongodb.net/?retryWrites=true&w=majority`

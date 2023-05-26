@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  app:
+    build: .
+    ports:
+      - ${PORT}:${PORT}
+    volumes:
+      - .:/app
+      - /app/node_modules
+    restart: always
+    command: yarn start:dev
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: mongo:latest
+    env_file:
+      - .env
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb:/data/db
+    container_name: db_mongo
+
+
+volumes:
+  mongodb:
