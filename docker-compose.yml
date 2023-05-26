@@ -13,18 +13,48 @@ services:
     env_file:
       - .env
     depends_on:
-      - db
+      - db1
 
-  db:
+  db1:
     image: mongo:latest
     env_file:
       - .env
+    expose:
+      - "27017"
     ports:
       - "27017:27017"
     volumes:
-      - mongodb:/data/db
-    container_name: db_mongo
+      - mongodb:/data/db1
+    container_name: db1
+    restart: always
 
+#  db2:
+#    image: mongo:latest
+#    env_file:
+#      - .env
+#    expose:
+#      - "27017"
+#    command: '--quiet --bind_ip_all --replSet rs0'
+#    ports:
+#      - "27018:27017"
+#    volumes:
+#      - mongodb:/data/db2
+#    container_name: db2
+#    restart: always
+#
+#  db3:
+#    image: mongo:latest
+#    env_file:
+#      - .env
+#    expose:
+#      - "27017"
+#    command: '--quiet --bind_ip_all --replSet rs0'
+#    ports:
+#      - "27019:27017"
+#    volumes:
+#      - mongodb:/data/db3
+#    container_name: db3
+#    restart: always
 
 volumes:
   mongodb:

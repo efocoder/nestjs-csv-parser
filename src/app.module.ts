@@ -7,7 +7,10 @@ import { CommodityPricesModule } from './commodity-prices/commodity-prices.modul
 @Module({
   imports: [
     Config,
-    MongooseModule.forRoot(process.env.MONGODB_URL),
+    // Having issues with setting up replicas in order the mongoose transaction to work. so used mongodb atlas to save time
+    MongooseModule.forRoot(
+      `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.1z4rrvt.mongodb.net/?retryWrites=true&w=majority`,
+    ),
     UsersModule,
     CommodityPricesModule,
   ],
@@ -15,5 +18,3 @@ import { CommodityPricesModule } from './commodity-prices/commodity-prices.modul
   providers: [],
 })
 export class AppModule {}
-
-// `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.1z4rrvt.mongodb.net/?retryWrites=true&w=majority`

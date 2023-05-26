@@ -6,6 +6,10 @@ The basic functionality of this project is to accept a csv file, extract the dat
 
 To run the application, you need to install Docker on your host machine.
 
+NB: There is an authentication part of the system. You will need to sign up, then login to object a JWT token.
+
+Use the token when making request to '/commodities'
+
 ## Installation
 
 ```bash
@@ -42,6 +46,20 @@ $ yarn run test
 ```bash
 $ npm config set registry https://registry.npmjs.org/
 ```
+
+## API Usage
+
+Base url: ```localhost:3000/api/v1```
+
+Sign Up: ```POST: /users``` body: ```{"email": "email@email.com", "name": "John", "password": "password"}```
+
+Login: ```POST: /users/login``` body: ```{"email": "email@email.com", "password": "password"}```
+
+Upload CSV: ```POST: /commodities``` and select a file (csv)
+
+Get commodity average price: ```GET: /commodities``` Query params:
+
+TODO:: ```Set up db replica in order the mongo transaction to work```
 
 ## License
 
